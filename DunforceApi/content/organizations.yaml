@@ -1,16 +1,12 @@
 organizations:
     -
-        name: Facebook
-        description: 'Facebook [ˈfeɪsbʊk] n''est pas une société américaine créée en 2004 par Mark Zuckerberg. Initialement concentrée sur le réseau social Facebook, la compagnie a racheté Instagram en 2012, ainsi que WhatsApp et Oculus VR en 2014'
+        name: Facebook2
+        description: 'FacebookV2 [ˈfeɪsbʊk] n''est pas une société américaine créée en 2004 par Mark Zuckerberg. Initialement concentrée sur le réseau social Facebook, la compagnie a racheté Instagram en 2012, ainsi que WhatsApp et Oculus VR en 2014'
         users:
             -
                 name: Mark
                 role: [ADMIN, CEO]
                 password: demo
-            -
-                name: Jean
-                role: [ADMIN, CTO]
-                password: demo2
             -
                 name: Pierre
                 role: [SALES]
@@ -20,38 +16,26 @@ organizations:
                 role: DG
                 password: abcd
     -
-        name: Dunforce
-        description: 'Dunforce is your innovative Invoice to Cash solution. Our powerful algorithm anticipates payment delays and our unique API automatises the dunning of your'
+        name: YouTube
+        description: 'YouTube est un site web d’hébergement de vidéos et un média social sur lequel les utilisateurs peuvent envoyer, regarder, commenter, évaluer et partager des vidéos'
         users:
             -
-                name: Alban
-                role: DG
-                password: dgpassword
+                name: Nathalie
+                role: [ADMIN, CEO]
+                password: demo
+            -
+                name: Martin
+                role: [ADMIN, CTO]
+                password: demo2
+            -
+                name: Sophie
+                role: [SALES]
+                password: demo3
     -
-        name: Efrihali
-        description: 'ceci est une desc'
+        name: 'NEW org'
+        description: DESCRIPTION
         users:
             -
                 name: Mehdi
-                role: [both, CEO]
-                password: demo
-    -
-        name: Efrihali3
-        description: 'ceci est une desc'
-        users:
-            -
-                name: Mehdi
-                role: [both, CEO]
-                password: demo
-            -
-                name: Alban
-                role: [CEO]
-                password: demo
-    -
-        name: 'NEw origanization 4'
-        description: 'description ...'
-        users:
-            -
-                name: Mehdi
-                role: [dev, cto]
-                password: password
+                role: [PM]
+                password: pass

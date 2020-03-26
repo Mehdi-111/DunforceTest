@@ -145,7 +145,7 @@ class Home extends Component {
               <button onClick={() => {
                 this.state.users.push({
                   name: this.state.username,
-                  role: this.state.role.includes(',') ? this.state.role.split(',') : this.state.role,
+                  role: this.state.role.includes(',') ? this.state.role.split(',') : [this.state.role],
                   password: this.state.password
                 })
                 let newTab = this.state.users
