@@ -17,6 +17,8 @@ class Home extends Component {
     showPopup: false,
     description: "",
     name: "",
+    password: "",
+    role: '',
     users: []
   };
   componentWillMount() {
@@ -46,7 +48,7 @@ class Home extends Component {
           }}
 
 
-          trigger={<button> Trigger</button>} position="bottom center">
+          trigger={<button> Add a new organization </button>} position="bottom center">
           <div>
             <div
               style={{
@@ -100,31 +102,70 @@ class Home extends Component {
 
 
             })}
+
+            <h3>Add User : </h3>
             <div style={{
-              marginTop: 30,
-              display: "flex",
-              flexDirection: "row"
-            }}>
-              <h3>Add User : </h3> <input onChange={(text) => {
+              display: 'flex',
+              flexDirection: "column"
+            }}>  <input onChange={(text) => {
+              this.setState({
+                name: text.target.value
+              })
+            }} placeholder='Username'></input>
+              <input onChange={(text) => {
                 this.setState({
-                  newUser: text.target.value
+                  role: text.target.value
                 })
-              }} placeholder='Add user'></input> <button onClick={() => {
-                console.log(this.state.newUser)
-                this.state.users.push({ name: this.state.newUser })
+              }} placeholder='Role'></input>
+              <input onChange={(text) => {
+                this.setState({
+                  password: text.target.value
+                })
+              }} placeholder='password'></input>
+
+              <button onClick={() => {
+                this.state.users.push({
+                  name: this.state.name,
+                  role: this.state.role.includes(',') ? this.state.role.split(',') : this.state.role,
+                  password: this.state.password
+                })
                 let newTab = this.state.users
                 this.setState({
                   users: newTab
                 })
 
-              }}>Add</button> </div>
+
+
+              }}>Add</button>
+
+
+
+            </div>
 
             <div style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               marginTop: 40
-            }}>  <Button>Save</Button></div>
+            }}>
+              <Button onClick={() => {
+
+                this.state.data.organizations.push({
+                  name: this.state.name,
+                  description: this.state.description,
+                  users: this.state.users,
+                })
+                let newData = this.state.data;
+
+
+
+
+                this.setState({
+                  data: newData
+                })
+                console.log(this.state.data)
+                axios.post(`http://localhost:8000/api/dunforce/entreprises/add`, { data: this.state.data })
+              }} >Save</Button></div>
 
           </div>
         </Popup>
@@ -141,6 +182,7 @@ class Home extends Component {
                     this.setState({
                       data: newData
                     })
+                    axios.delete(`http://127.0.0.1:8000/api/dunforce/entreprises/delete`, { data: this.state.data })
 
                   }}
                   style={{
@@ -158,6 +200,7 @@ class Home extends Component {
                   />
                 </button>
                 <Organization
+                  data={this.state.data}
                   name={org.name}
                   desc={org.description}
                   users={org.users}

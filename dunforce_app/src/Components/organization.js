@@ -1,7 +1,7 @@
 import { Card, Icon, Image, Button } from "semantic-ui-react";
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
-
+import axios from "axios";
 
 class Organization extends Component {
   state = {
@@ -9,13 +9,22 @@ class Organization extends Component {
     description: this.props.desc || "Description",
     name: this.props.name || "Name",
     users: this.props.users || [],
-    newUser: ""
+    newUser: {},
+    index: 0,
+    password: "",
+    role: '',
   };
   togglePopup() {
     this.setState({
       showPopup: !this.state.showPopup
     });
   }
+  getIndex(tab, el) {
+    for (let i = 0; i < tab.length; i++) {
+      if (tab[i].name == el) return i;
+    }
+  }
+
 
   render() {
     return (
@@ -116,6 +125,7 @@ class Organization extends Component {
                               display: 'flex',
                               flexDirection: 'row'
                             }}>  <a> {user.name}</a>
+
                               <button onClick={() => {
                                 this.setState({
                                   users: this.state.users.filter(res =>
@@ -134,17 +144,41 @@ class Organization extends Component {
                         display: "flex",
                         flexDirection: "row"
                       }}>
-                        <h3>Add User : </h3> <input onChange={(text) => {
+                        <h3>Add User : </h3>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: "column"
+                        }}>  <input onChange={(text) => {
                           this.setState({
-                            newUser: text.target.value
+                            username: text.target.value
                           })
-                        }} placeholder='Add user'></input> <button onClick={() => {
-                          console.log(this.state.newUser)
-                          this.state.users.push({ name: this.state.newUser })
+                        }} placeholder='Username'></input>
+                          <input onChange={(text) => {
+                            this.setState({
+                              role: text.target.value
+                            })
+                          }} placeholder='Role'></input>
+                          <input onChange={(text) => {
+                            this.setState({
+                              password: text.target.value
+                            })
+                          }} placeholder='password'></input>
+
+
+                        </div>
+
+                        <button onClick={() => {
+                          this.state.users.push({
+                            name: this.state.username,
+                            role: this.state.role.includes(',') ? this.state.role.split(',') : this.state.role,
+                            password: this.state.password
+                          })
                           let newTab = this.state.users
                           this.setState({
                             users: newTab
                           })
+                          console.log(this.state.users)
+
 
                         }}>Add</button>
 
@@ -154,7 +188,14 @@ class Organization extends Component {
                     <div style={{
                       marginTop: 50
                     }}>
-                      <Button >Save</Button>
+                      <Button onClick={() => {
+                        axios.post(`http://localhost:8000/api/dunforce/entreprises/update`, {
+                          name: this.state.name,
+                          description: this.state.description,
+                          users: this.state.users,
+                          index: this.getIndex(this.props.data.organizations, this.props.name)
+                        })
+                      }}  >Save</Button>
                     </div>
                   </Popup>
                 </div>
@@ -163,7 +204,7 @@ class Organization extends Component {
             </Card.Content>
           </Card.Content>
         </Card>
-      </div>
+      </div >
     );
   }
 }
