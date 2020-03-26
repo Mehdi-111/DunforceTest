@@ -42,8 +42,10 @@ class Organization extends Component {
             </div>
             <h3>Description :</h3>
             <Card.Description>{this.props.desc} </Card.Description>
-            <Card.Content extra>
-              Users :
+            <Card.Content extra >
+              <h4 style={{
+                marginTop: 40
+              }}> Users :</h4>
               <div
                 style={{
                   display: "flex",
@@ -110,7 +112,8 @@ class Organization extends Component {
                       </div>
                       <div style={{
                         display: 'flex',
-                        flexDirection: 'column'
+                        flexDirection: 'column',
+                        marginTop: 50
                       }}>
                         <h3>Users :</h3>
                         {this.state.users.map(user => {
@@ -183,13 +186,7 @@ class Organization extends Component {
                       marginTop: 50
                     }}>
                       <Button onClick={() => {
-                        console.log({
-                          "name": this.state.name,
-                          "description": this.state.description,
-                          "users": this.state.users,
-                          "index": this.getIndex(this.props.data.organizations, this.props.name)
 
-                        })
                         axios.put(`http://localhost:8000/api/dunforce/entreprises/update`, {
                           "name": this.state.name,
                           "description": this.state.description,

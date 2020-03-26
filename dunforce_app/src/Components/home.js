@@ -19,11 +19,26 @@ class Home extends Component {
     name: "",
     password: "",
     role: '',
-    users: []
+    users: [],
+    username: ""
   };
+  getIndex(tab, el) {
+    for (let i = 0; i < tab.length; i++) {
+      if (tab[i].name == el) return i;
+    }
+  }
   componentWillMount() {
     axios
-      .get(`http://localhost:8000/api/dunforce/entreprises`)
+      .get(`http://localhost:8000/api/dunforce/entreprises`, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+
+
+
+
+        }
+      })
 
       .then(res => {
         console.log(res.data);
@@ -40,8 +55,13 @@ class Home extends Component {
           flexDirection: "column"
         }}
       >
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>   <h1>Welcome to organizaition panel :</h1></div>
+
         <Popup
           contentStyle={{
+            position: "absolute",
+            top: 10,
+            right: 20,
 
             height: 700,
             width: 600
@@ -59,7 +79,7 @@ class Home extends Component {
             >
               <h3>Name : </h3> <input onChange={(text) => {
                 this.setState({
-                  description: text.target.value
+                  name: text.target.value
                 })
               }} placeholder="Name"></input>
             </div>
@@ -82,7 +102,6 @@ class Home extends Component {
                   })
                 }} />
             </div>
-
 
             {this.state.users.map(user => {
               return (
@@ -109,7 +128,7 @@ class Home extends Component {
               flexDirection: "column"
             }}>  <input onChange={(text) => {
               this.setState({
-                name: text.target.value
+                username: text.target.value
               })
             }} placeholder='Username'></input>
               <input onChange={(text) => {
@@ -125,7 +144,7 @@ class Home extends Component {
 
               <button onClick={() => {
                 this.state.users.push({
-                  name: this.state.name,
+                  name: this.state.username,
                   role: this.state.role.includes(',') ? this.state.role.split(',') : this.state.role,
                   password: this.state.password
                 })
@@ -158,32 +177,41 @@ class Home extends Component {
                 let newData = this.state.data;
 
 
-                console.log(newData)
 
                 this.setState({
                   data: newData
                 })
-                console.log(this.state.data)
-                axios.post(`http://localhost:8000/api/dunforce/entreprises/add`, this.state.data)
+                axios.post(`http://localhost:8000/api/dunforce/entreprises/add`, {
+
+                  name: this.state.name,
+                  description: this.state.description,
+                  users: this.state.users,
+
+                }, {
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': 'application/json'
+
+
+
+
+                  }
+                }).then(res => console.log(res)).catch(err => console.log(err))
               }} >Save</Button></div>
 
           </div>
         </Popup>
+        <h2>Organziations : </h2>
+
         {typeof this.state.data.organizations !== "undefined" ?
           this.state.data.organizations.map(org => {
             return (
               <div>
                 <button
                   onClick={() => {
-                    let newTab = this.state.data.organizations.filter(el => el.name != org.name)
-                    let newData = this.state.data;
-                    newData.organizations = newTab;
-                    console.log(newData)
 
-                    this.setState({
-                      data: newData
-                    })
-                    axios.delete(`http://localhost:8000/api/dunforce/entreprises/delete`, { data: this.state.data }, {
+                    console.log(this.getIndex(this.state.data.organizations, org.name))
+                    axios.delete(`http://localhost:8000/api/dunforce/entreprises/delete`, { data: { "index": this.getIndex(this.state.data.organizations, org.name) } }, {
                       headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                         'Accept': 'application/json'
@@ -192,7 +220,17 @@ class Home extends Component {
 
 
                       }
-                    }).then(res => console.log(res)).catch(err => console.log(err))
+                    }).then(res => {
+                      let newTab = this.state.data.organizations.filter(el => el.name != org.name)
+                      let newData = this.state.data;
+                      newData.organizations = newTab;
+                      console.log(newData)
+
+                      this.setState({
+                        data: newData
+                      })
+
+                    }).catch(err => console.log(err))
 
                   }}
                   style={{
@@ -219,9 +257,11 @@ class Home extends Component {
               </div>
             );
           }) : <h1>No Data to render</h1>}
-      </div>
+      </div >
     );
   }
 }
-
+function refreshPage() {
+  window.location.reload();
+}
 export default Home;

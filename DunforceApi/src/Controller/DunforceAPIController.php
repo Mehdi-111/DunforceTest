@@ -55,16 +55,26 @@ file_put_contents('../content/organizations.yaml', $new_yaml);
      */
     public function addOrg(Request $request) {
        
-        $data =  json_decode($request->getContent(), true);
+    //     $data =  json_decode($request->getContent(), true);
        
 
-        $new_yaml = Yaml::dump($data,5);
+    //     $new_yaml = Yaml::dump($data,5);
 
-    file_put_contents('../content/organizations.yaml', $new_yaml);
+    // file_put_contents('../content/organizations.yaml', $new_yaml);
 
 
     
-        return new JsonResponse($new_yaml);
+    //     return new JsonResponse($new_yaml);
+
+    $data =  json_decode($request->getContent(), true);
+    $yaml = Yaml::parse(file_get_contents('../content/organizations.yaml'));
+    array_push($yaml["organizations"] , $data);
+    $indexedYaml = array_values($yaml["organizations"]);
+    $yaml["organizations"] = $indexedYaml;
+    $new_yaml = Yaml::dump($yaml,5);
+
+    file_put_contents('../content/organizations.yaml', $new_yaml);
+    return new JsonResponse($new_yaml);
 
     }
       /**
@@ -73,11 +83,16 @@ file_put_contents('../content/organizations.yaml', $new_yaml);
     public function deleteOrg(Request $request) {
        
         $data =  json_decode($request->getContent(), true);
-       
+        $yaml = Yaml::parse(file_get_contents('../content/organizations.yaml'));
+        unset(($yaml["organizations"])[$data["index"]]);
+        // array_splice($yaml['organizations'],$data["index"]);
 
-        $new_yaml = Yaml::dump($data,5);
+        $indexedYaml = array_values($yaml["organizations"]);
+        $yaml["organizations"] = $indexedYaml;
 
-    file_put_contents('../content/organizations.yaml', $new_yaml);
+        $new_yaml = Yaml::dump($yaml,5);
+
+        file_put_contents('../content/organizations.yaml', $new_yaml);
 
 
     
