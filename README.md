@@ -83,5 +83,6 @@ Index of the organization to delte. ({"index" : 1})
 ## Next steps :
 
 - [ ] Adding errors handling.
+- [ ] Adding validation to user's input.
 - [ ] Improve front.
 - [ ] Adding documentation with swagger
