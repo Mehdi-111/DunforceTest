@@ -164,7 +164,7 @@ class Home extends Component {
                   data: newData
                 })
                 console.log(this.state.data)
-                axios.post(`http://localhost:8000/api/dunforce/entreprises/add`, { data: this.state.data })
+                axios.post(`http://localhost:8000/api/dunforce/entreprises/add`, this.state.data)
               }} >Save</Button></div>
 
           </div>
