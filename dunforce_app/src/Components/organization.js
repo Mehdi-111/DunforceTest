@@ -60,13 +60,7 @@ class Organization extends Component {
                     flexDirection: "row"
                   }}
                 >
-                  <button
-                    onClick={() => {
-                      this.setState({ showPopup: true });
-                    }}
-                  >
-                    Delete
-                  </button>
+
                   <Popup
                     contentStyle={{
                       height: 500,
@@ -189,12 +183,33 @@ class Organization extends Component {
                       marginTop: 50
                     }}>
                       <Button onClick={() => {
-                        axios.post(`http://localhost:8000/api/dunforce/entreprises/update`, {
-                          name: this.state.name,
-                          description: this.state.description,
-                          users: this.state.users,
-                          index: this.getIndex(this.props.data.organizations, this.props.name)
+                        console.log({
+                          "name": this.state.name,
+                          "description": this.state.description,
+                          "users": this.state.users,
+                          "index": this.getIndex(this.props.data.organizations, this.props.name)
+
                         })
+                        axios.put(`http://localhost:8000/api/dunforce/entreprises/update`, {
+                          "name": this.state.name,
+                          "description": this.state.description,
+                          "users": this.state.users,
+                          "index": this.getIndex(this.props.data.organizations, this.props.name)
+                        },
+
+                          {
+                            headers: {
+                              'Content-Type': 'application/x-www-form-urlencoded',
+                              'Accept': 'application/json'
+
+
+
+
+                            }
+                          }).then((res) => {
+                            refreshPage();
+                            alert("Modification saved !")
+                          })
                       }}  >Save</Button>
                     </div>
                   </Popup>
@@ -208,5 +223,7 @@ class Organization extends Component {
     );
   }
 }
-
+function refreshPage() {
+  window.location.reload();
+}
 export default Organization;

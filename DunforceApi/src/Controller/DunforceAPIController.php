@@ -21,15 +21,7 @@ class DunforceAPIController extends AbstractController
     {
 
         $yaml = Yaml::parse(file_get_contents('../content/organizations.yaml'));
-        // $yamlString = Yaml::dump($yaml);
-        // $parsed = yaml_parse($yaml);
-
-        // dd($yaml);
-        // $data = file_get_contents('../content/test.json');
-        // $yaml["organizations"][0]
-        // $response->headers->set('content-type','application/json');
-        // $yaml["organizations"][0]["name"]="EFRIHALI";
-        //  dd($yaml);
+        
          return new JsonResponse($yaml);
 
        
@@ -54,8 +46,7 @@ class DunforceAPIController extends AbstractController
 file_put_contents('../content/organizations.yaml', $new_yaml);
 
 
-    //    dd($yaml);
-        // var_dump($data["index"]);
+    
         return new JsonResponse($yaml);
 
     }
@@ -72,26 +63,24 @@ file_put_contents('../content/organizations.yaml', $new_yaml);
     file_put_contents('../content/organizations.yaml', $new_yaml);
 
 
-    //    dd($yaml);
-        // var_dump($data["index"]);
+    
         return new JsonResponse($new_yaml);
 
     }
       /**
-     * @Route("/dunforce/entreprises/delete", name="delete",methods={"POST","OPTIONS"})
+     * @Route("/dunforce/entreprises/delete", name="delete",methods={"DELETE"})
      */
     public function deleteOrg(Request $request) {
        
         $data =  json_decode($request->getContent(), true);
        
 
-        $new_yaml = Yaml::dump($data);
+        $new_yaml = Yaml::dump($data,5);
 
     file_put_contents('../content/organizations.yaml', $new_yaml);
 
 
-    //    dd($yaml);
-        // var_dump($data["index"]);
+    
         return new JsonResponse($new_yaml);
 
     }

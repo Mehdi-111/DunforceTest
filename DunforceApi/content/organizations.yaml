@@ -1,7 +1,7 @@
 organizations:
     -
         name: Facebook
-        description: 'Facebook [ˈfeɪsbʊk] est une société américaine créée en 2004 par Mark Zuckerberg. Initialement concentrée sur le réseau social Facebook, la compagnie a racheté Instagram en 2012, ainsi que WhatsApp et Oculus VR en 2014'
+        description: 'Facebook [ˈfeɪsbʊk] n''est pas une société américaine créée en 2004 par Mark Zuckerberg. Initialement concentrée sur le réseau social Facebook, la compagnie a racheté Instagram en 2012, ainsi que WhatsApp et Oculus VR en 2014'
         users:
             -
                 name: Mark
@@ -15,6 +15,10 @@ organizations:
                 name: Pierre
                 role: [SALES]
                 password: demo3
+            -
+                name: Mehdi
+                role: DG
+                password: abcd
     -
         name: Google
         description: 'Google LLC /ˈguːgəl/ est une entreprise américaine de services technologiques fondée en 1998 dans la Silicon Valley, en Californie, par Larry Page et Sergey Brin, créateurs du moteur de recherche Google. C''est une filiale de la société Alphabet depuis août 2015'
@@ -47,11 +51,3 @@ organizations:
                 name: Sophie
                 role: [SALES]
                 password: demo3
-    -
-        name: azaz
-        description: zazazz
-        users:
-            -
-                name: azaz
-                role: azaz
-                password: azazza

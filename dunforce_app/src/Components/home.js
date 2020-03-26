@@ -43,8 +43,8 @@ class Home extends Component {
         <Popup
           contentStyle={{
 
-            height: 400,
-            width: 400
+            height: 700,
+            width: 600
           }}
 
 
@@ -158,7 +158,7 @@ class Home extends Component {
                 let newData = this.state.data;
 
 
-
+                console.log(newData)
 
                 this.setState({
                   data: newData
@@ -169,7 +169,7 @@ class Home extends Component {
 
           </div>
         </Popup>
-        {this.state.data.organizations &&
+        {typeof this.state.data.organizations !== "undefined" ?
           this.state.data.organizations.map(org => {
             return (
               <div>
@@ -178,11 +178,21 @@ class Home extends Component {
                     let newTab = this.state.data.organizations.filter(el => el.name != org.name)
                     let newData = this.state.data;
                     newData.organizations = newTab;
+                    console.log(newData)
 
                     this.setState({
                       data: newData
                     })
-                    axios.delete(`http://127.0.0.1:8000/api/dunforce/entreprises/delete`, { data: this.state.data })
+                    axios.delete(`http://localhost:8000/api/dunforce/entreprises/delete`, { data: this.state.data }, {
+                      headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Accept': 'application/json'
+
+
+
+
+                      }
+                    }).then(res => console.log(res)).catch(err => console.log(err))
 
                   }}
                   style={{
@@ -208,7 +218,7 @@ class Home extends Component {
                 />
               </div>
             );
-          })}
+          }) : <h1>No Data to render</h1>}
       </div>
     );
   }
