@@ -1,5 +1,7 @@
 # Dunforce
-This is my program for the backend test for Dunforce.
+This is my program for the backend test for Dunforce .
+
+*  **Routes are inside /DunforceApi/src/Controller/DunforceAPIController.php**
 
 ## Stack
 
@@ -16,11 +18,13 @@ $ git clone https://github.com/Mehdi-111/mehdi-111.git
 $
 $ # Install packages.
 $ npm install  (inside the dunforce_app folder)
+$ and then : npm start  (to launch the app on port 3000)
 $
 $ # to start the server use (inside the DunforceApi folder) : 
 $ php -S 127.0.0.1:8000 -t public
 
 ```
+## API Documentation : 
 
  **Methods:**
   `GET` | `POST` | `DELETE` | `PUT`
